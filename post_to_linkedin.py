@@ -9,27 +9,25 @@ def main():
 
     payload = {
         "author": f"urn:li:person:{person_id}",
-        "commentary": data["post"],
-        "visibility": "PUBLIC",
-        "distribution": {
-            "feedDistribution": "MAIN_FEED",
-            "targetEntities": [],
-            "thirdPartyDistributionChannels": []
-        },
         "lifecycleState": "PUBLISHED",
-        "isReshareDisabledByAuthor": False
+        "specificContent": {"com.linkedin.ugc.ShareContent": {
+            "shareCommentary": {"text": data["post"]},
+            "shareMediaCategory": "NONE"
+        }},
+        "visibility": {
+            "com.linkedin.ugc.MemberNetworkVisibility": "PUBLIC"}
     }
-
     r = requests.post(
-        "https://api.linkedin.com/rest/posts",
+        "https://api.linkedin.com/v2/ugcPosts",
         headers={
             "Authorization": f"Bearer {token}",
             "Content-Type": "application/json",
-            "LinkedIn-Version": "202406"
+            "X-Restli-Protocol-Version": "2.0.0"
         },
         json=payload
     )
-    print("Status:", r.status_code, r.text)
+    print("Status:", r.status_code)
+    print("Response:", r.text)
     r.raise_for_status()
     print("✅ Posted!")
 
