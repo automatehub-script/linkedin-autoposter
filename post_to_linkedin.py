@@ -8,17 +8,20 @@ def main():
         data = json.load(f)
 
     payload = {
-        "author": f"urn:li:member:{person_id}",
-        "lifecycleState": "PUBLISHED",
-        "specificContent": {"com.linkedin.ugc.ShareContent": {
-            "shareCommentary": {"text": data["post"]},
-            "shareMediaCategory": "NONE"
-        }},
-        "visibility": {
-            "com.linkedin.ugc.MemberNetworkVisibility": "PUBLIC"}
+        "content": {
+            "contentEntities": [],
+            "title": "AI & Cybersecurity Insight"
+        },
+        "distribution": {
+            "linkedInDistributionTarget": {}
+        },
+        "owner": f"urn:li:person:{person_id}",
+        "subject": "AI & Cybersecurity",
+        "text": {"text": data["post"]}
     }
+
     r = requests.post(
-        "https://api.linkedin.com/v2/ugcPosts",
+        "https://api.linkedin.com/v2/shares",
         headers={
             "Authorization": f"Bearer {token}",
             "Content-Type": "application/json",
