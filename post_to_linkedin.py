@@ -25,7 +25,7 @@ def main():
         headers={
             "Authorization": f"Bearer {token}",
             "Content-Type": "application/json",
-            "LinkedIn-Version": "202401"
+            "LinkedIn-Version": "202501"
         },
         json=payload
     )
