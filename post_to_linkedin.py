@@ -15,7 +15,7 @@ def main():
         "distribution": {
             "linkedInDistributionTarget": {}
         },
-        "owner": f"urn:li:person:{person_id}",
+        "owner": f"urn:li:member:{person_id}",
         "subject": "AI & Cybersecurity",
         "text": {"text": data["post"]}
     }
