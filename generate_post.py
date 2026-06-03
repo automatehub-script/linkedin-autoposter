@@ -18,14 +18,10 @@ def generate():
     day = datetime.utcnow().timetuple().tm_yday
     topic = TOPICS[day % len(TOPICS)]
     prompt = f"""Write a LinkedIn post about: "{topic}"
-- Max 200 words
-- Punchy opening line
-- End with a question for comments
-- Add 5 hashtags at the end
-- Tone: expert, human, forward-looking
-Only output the post text."""
+- Max 200 words, punchy opening, end with question, 5 hashtags
+- Tone: expert, human, forward-looking. Only output post text."""
 
-    model = genai.GenerativeModel("gemini-1.5-flash")
+    model = genai.GenerativeModel("gemini-2.0-flash")  # ← fixed model name
     resp = model.generate_content(prompt,
         generation_config={"max_output_tokens": 300})
     post = resp.text.strip()
