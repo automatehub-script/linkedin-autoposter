@@ -6,13 +6,14 @@ def main():
     with open("generated_post.json") as f:
         data = json.load(f)
 
-    # Get user URN
-    r = requests.get("https://api.linkedin.com/v2/userinfo",
-        headers={"Authorization": f"Bearer {token}"})
+    # Get user ID via /v2/me
+    r = requests.get("https://api.linkedin.com/v2/me",
+        headers={"Authorization": f"Bearer {token}",
+                 "X-Restli-Protocol-Version": "2.0.0"})
     r.raise_for_status()
-    urn = f"urn:li:person:{r.json()['sub']}"
+    urn = f"urn:li:person:{r.json()['id']}"
 
-    # Post
+    # Post to LinkedIn
     payload = {
         "author": urn,
         "lifecycleState": "PUBLISHED",
